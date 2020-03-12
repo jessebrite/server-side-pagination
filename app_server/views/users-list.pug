@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .row.banner
+
+  .row
+    .col-12.col-md-8
+      .error= message
+
+      h4
+        a(href='/users')= 'Add User'
+
+      each user in users
+        .card
+          .card-block
+            h4
+              a(href=`/users/${user._id}`)= user.first_name
+
+            form.hidden(method="POST", action=`/users/${user._id}`)
+              button.btn.btn-outline-danger.float-right.delete Delete
+
+            p.address= user.email
+            p.gender= user.gender
+            p.ip_address= user.ip_addres

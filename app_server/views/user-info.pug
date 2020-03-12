@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  .row.banner
+
+  if statusCode === 200
+    .row
+      .offset-sm-2.col-sm-8
+        .alert.alert-success(role="alert").text-center
+          p Your new post was created successfully! #[a(href="/" + post.slug) View it?]
+
+  .row
+    .col-12.col-md-8
+      form#addReview.form-horizontal(action='' method='POST' role='form')
+        - if (error == 'val')
+            .alert.alert-danger(role='alert') All fields required. Please try again
+              button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times;
+        .form-group.row
+          label.col-xs-10.col-sm-2.control-label(for="first_name") First Name
+          .col-xs-12.col-sm-10
+            input#fist_name.form-control(name="first_name" placeholder="First Name")
+        .form-group.row
+          label.col-xs-10.col-sm-2.control-label(for="last_name") Last Name
+          .col-xs-12.col-sm-10
+            input#last_name.form-control(name="last_name" placeholder="Last name")
+        .form-group.row
+          label.col-xs-10.col-sm-2.control-label(for="name") Email
+          .col-xs-12.col-sm-10
+            input#email.form-control(name="email" placeholder="user@example.com")
+        .form-group.row
+          label.col-xs-10.col-sm-2.control-label(for="gender") Gender
+          .col-xs-12.col-sm-10
+            input#gender.form-control(name="gender" placeholder="Male or Female")
+        .form-group.row
+          label.col.xs-10.col-sm-2.control-label(for="ip_address") IP Address
+          .col-xs-12.col-sm-10
+            input#ip_address.form-control(name="ip_address" placeholder="124.110.14.12")
+        button.btn.btn-primary.float-right Update User
+      .col-12-col.md-4
+
+
+
