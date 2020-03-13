@@ -32,8 +32,7 @@ const homelist = (req, res) => {
   request(
     requestOptions,
     (err, {statusCode}, body) => {
-      let data = [];
-      if (statusCode === 200 && body.length) {
+      if (statusCode === 200 && body.length > 0) {
         console.log('Tingz dey inside!');
       }
       renderHomepage(req, res, body);
