@@ -1,44 +1,51 @@
 const request = require('request');
-const apiOptions = {
-  server: 'http://localhost:3000'
-};
+const apiOptions = { server: 'http://localhost:3000' };
 
-const renderHomepage = (req, res, responseBody) => {
+/* Get 'home page' */
+const renderHomepage = (req, res, responseBody, total, pageNo) => {
   let message = null;
   if (!(responseBody instanceof Array)) {
-    message = 'Error retrieving users';
+    message = 'API lookup error';
     responseBody = [];
   } else {
     if (!responseBody.length) {
-      message = 'No user found';
+      message = 'No users found nearby';
     }
   }
-  res.render('users-list',
-    {
-      title: 'Home Page',
-      users: responseBody,
-      message: message
-    }
-  );
-};
+
+	res.render('users-list', {
+	  title: 'Home Page',
+    users: responseBody,
+    pageTotal: total,
+    current: pageNo,
+    message: message
+	});
+}
+
 
 const homelist = (req, res) => {
-  const path = '/api/users';
-  const requestOptions = {
-    url: `${apiOptions.server}${path}`,
-    method: 'GET',
-    json: {},
+  const data = req.query.pageNo;
+  const pageNo = (typeof data === 'undefined' || data < 1) ? 1 : parseInt(data);
+	const path = `/api/users?pageNo=${pageNo}`;
+	const requestOptions = {
+		url: `${apiOptions.server}${path}`,
+		method: 'GET',
+		json: true,
   };
+
   request(
     requestOptions,
     (err, {statusCode}, body) => {
-      if (statusCode === 200 && body.length > 0) {
-        console.log('Tingz dey inside!');
+      if (err) {
+        console.log('Ther was an error ', err);
+      } else if (statusCode === 200 ) {
+        renderHomepage(req, res, body.status, body.total, body.pageNo);
+      } else if (statusCode !== 200 ) {
+        console.log('error ',statusCode);
       }
-      renderHomepage(req, res, body);
     }
   );
-};
+}
 
 const getDetailsInfo = (req, res, callback) => {
   const userid = req.params.userid;
@@ -59,6 +66,30 @@ const getDetailsInfo = (req, res, callback) => {
   });
 }
 
+const renderUserPage = (req, res, userData) => {
+  res.render('user-info', {
+    title: 'Update Page',
+    user: userData,
+		error: req.query.err
+  });
+}
+
+
+/* Get 'User info' page */
+const userInfo = (req, res) => {
+  const path = `/api/users/${req.params.userid}`;
+  const requestOptions = {
+    url: `${apiOptions.server}${path}`,
+    method: 'GET',
+    json: {}
+  };
+
+	getDetailsInfo(req, res, (req, res, responseData) => {
+		renderUserPage(req, res, responseData);
+  });
+};
+
+
 const createUser = (req, res, callback) => {
   const path = `/api/users`
   requestOptions = {
@@ -77,26 +108,11 @@ const createUser = (req, res, callback) => {
   });
 }
 
-const renderUserPage = (req, res, userData) => {
-  res.render('user-info', {
-    title: 'Update Page',
-    user: userData,
-		error: req.query.err
-  });
-}
-
 const renderCreateUserPage = (req, res, userData) => {
   res.render('add-user', {
     title: 'Add User',
     user: userData,
     error: req.query.err
-  });
-}
-
-const userInfo = (req, res) => {
-  getDetailsInfo(req, res, (req, res, responseData) => {
-    renderUserPage(req, res, responseData);
-    console.log('User info works');
   });
 }
 

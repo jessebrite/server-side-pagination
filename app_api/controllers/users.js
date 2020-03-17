@@ -2,37 +2,33 @@ const mongoose = require('mongoose');
 const Users = mongoose.model('Users');
 
 const getAll = async (req, res) => {
-  const pageNo = (typeof req.query.pageNo === "undefined") ? 1 : parseInt(req.query.pageNo);
-  const size = (typeof req.query.size === "undefined") ? 1 : parseInt(req.query.size);
-  let query = {}
-  if (pageNo <= 0) {
-    return res.status(400).json({
-      message: {error: true, message: 'Yawa pae heavy!'}
-    });
-  }
 
-  query.skip = size * (pageNo - 1);
-  query.limit = size;
+  // The pagination
+  const data = req.query.pageNo;
+  const pageNo = (typeof data === 'undefined' || data < 1) ? 1 : parseInt(data);
+  let query = {};
+  const total = 10;
+  query.skip = (total * pageNo) - total;
+  query.limit = total;
+
   try {
     const totalCount = await Users.countDocuments();
-    const pageTotal = Math.ceil(totalCount / size);
+    const pageTotal = Math.ceil(totalCount / total);
     const users = await Users.find({}, {}, query);
-    if (users !== null) {
-      return res.status(200).json({ error: false, message: users, "Total Pages": pageTotal })
-    } else {
-      return res.status(400).json({ error: true, message: "OOps! No users were found" })
-    }
-  } catch (err) {
-    res.status(400).send(err);
-  }
+
+    return res.status(200).json({error: false, status: users, total: pageTotal, pageNo: pageNo});
+  } catch (error) {
+    console.log('Error ', error);
+    return res.status(400).send(error)
+  };
 };
 
 const getOne = async (req, res) => {
   try {
-    const id = req.params.userid;
+    const id = req.params.useruserid;
     const user = await Users.findById(id);
     if (user !== null) {
-    return res.status(200).json({ error: false, status:"User found", message:user });
+    return res.status(200).json(user);
   }
     return res.status(400).json({ error: true, status: "invalid input", message: "no such user" });
   } catch(error) {
@@ -68,9 +64,9 @@ const createOne = async (req, res) => {
   try {
     const user = await Users.create(queryText);
 
-    if (!queryText.first_name || !queryText.last_name || !queryText.email
+    if ( !queryText.last_name || !queryText.email
         || !queryText.gender || !queryText.ip_address) {
-      return res.status(400).json({ eror: true, status: 'All fields are required' });
+      return res.status(400).json({ error: true, status: 'All fields are required' });
     }
     else if (user !== null) {
       console.log('Creation success!');
@@ -94,7 +90,7 @@ const deleteOne = async (req, res) => {
         return res.status(400).json({ error: true, status: 'Problem with the requested param' });
       }
     }
-    return res.status(200).json({ error: true, status: 'User  not found'})
+    return res.status(400).json({ error: true, status: 'User  not found'})
   } catch (err) {
     return res.status(400).send(err);
   }

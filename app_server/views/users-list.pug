@@ -19,6 +19,39 @@ block content
             form.hidden(method="POST", action=`/users/${user._id}`)
               button.btn.btn-outline-danger.float-right.delete Delete
 
-            p.address= user.email
+            p.email= user.email
             p.gender= user.gender
             p.ip_address= user.ip_addres
+
+      if pageTotal > 0
+        nav(aria-label='...')
+          ul.pagination
+            // set current back to 1 in the conditional
+            if current === 1
+              li.page-item.disabled
+                a.page-link(href='#' tabindex='-1' aria-disabled='true') First
+            else
+              li.page-item
+                a.page-link(href='?pageNo=1') First
+
+            - var i = (Number(current) > 5 ? Number(current) - 4 : 1)
+            if i !== 1
+              li.page-item.disabled
+                a.page-link(href='#' tabindex='-1' aria-disabled='true') ...
+            - for (; i <= (Number(current) + 4) && i <= pageTotal; i++)
+              if (i === current)
+                li.page-item.active
+                  a.page-link= i
+              else
+                li.page-item
+                a.page-link(href=`/?pageNo=${i}` tabindex='-1' aria-disabled='true')= i
+              if (i == Number(current) + 4 && i < pageTotal)
+                li.page-item.disabled
+                  a.page-link(href='' tabindex='-1' aria-disabled='true') ...
+            if current === pageTotal
+              li.page-item.disabled
+                a.page-link(href='' tabindex='-1' aria-disabled='true') Last
+            else
+              li.page-item
+                a.page-link(href=`/?pageNo=${pageTotal}`) Last
+
