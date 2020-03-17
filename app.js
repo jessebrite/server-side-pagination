@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressValidator = require('express-validator');
+var methodOverride = require('method-override')
 require('./app_api/models/db')
 
 var indexRouter = require('./app_server/routes/index');
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method')) // To override PUT and DELETE methods
 
 app.use('/', indexRouter);
 app.use('/api', usersRouter);

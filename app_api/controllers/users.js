@@ -25,7 +25,7 @@ const getAll = async (req, res) => {
 
 const getOne = async (req, res) => {
   try {
-    const id = req.params.useruserid;
+    const id = req.params.userid;
     const user = await Users.findById(id);
     if (user !== null) {
     return res.status(200).json(user);
@@ -43,7 +43,7 @@ const updateOne = async (req, res) => {
 
   try {
     let user = await Users.findByIdAndUpdate(id, queryText);
-    if (!queryText.first_name || !queryText.last_name || queryText.email
+    if (!queryText.first_name || !queryText.last_name || !queryText.email
         || !queryText.gender || !queryText.ip_address) {
       return res.status(400).json({ error: true, status: "All fields are required", message: user });
     }

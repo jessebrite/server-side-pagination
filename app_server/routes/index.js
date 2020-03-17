@@ -7,8 +7,8 @@ router
   .get('/users', ctrlUsers.newUser)
   .post('/users', ctrlUsers.forkUser)
   .get('/users/:userid', ctrlUsers.userInfo)
-  // .put('/users/:userid', ctrlUsers.updateUser)
-  .post('/users/:userid', ctrlUsers.deleteUser)
+  .post('/users/:userid', ctrlUsers.updateUser)
+  .delete('/users/:userid', ctrlUsers.deleteUser)
 
 
 module.exports = router;

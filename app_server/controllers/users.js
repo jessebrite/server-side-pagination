@@ -57,6 +57,7 @@ const getDetailsInfo = (req, res, callback) => {
   }
 
   request(requestOptions, (err, {statusCode}, body) => {
+    console.log(body); // To delete later
     if (err) { console.log(err) }
     else if (statusCode === 200) {
       callback(req, res, body);
@@ -143,13 +144,13 @@ const updateUser = (req, res) => {
   } else {
     request(requestOptions, (err, {statusCode}, {name}) => {
       if (err) { console.log(err) }
-      else if (statusCode === 400 && name && name === 'ValidationError') {
+      if (statusCode === 200) {
+        console.log(`Update success: ${statusCode}`);
+        return res.redirect('/');
+      }
+      else if (statusCode !== 200 && name && name === 'ValidationError') {
         console.log(`Update failed: ${statusCode}`);
         return res.redirect(`/users/${userid}/?err=val`);
-      }
-      else {
-        console.log(`Update success: ${statusCode}`);
-        return res.redirect('/')
       }
     });
   }
