@@ -1,0 +1,10 @@
+//- I should propably do the error trapping in here and call it instead
+mixin throwError()
+  - if (error === 'val')
+      .alert.alert-danger(role='alert') All fields required. Please try again
+        button.close(type='button' data-dismiss='alert' aria-label='Close')
+          span(aria-hidden='true') &times;
+  - else
+      .alert.alert-danger(role='alert')= error
+        button.close(type='button' data-dismiss='alert' aria-label='Close')
+          span(aria-hidden='true') &times;

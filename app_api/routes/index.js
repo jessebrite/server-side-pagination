@@ -2,19 +2,18 @@ var express = require('express');
 var router = express.Router();
 const ctrlUsers = require('../controllers/users');
 const ctrlStudents = require('../controllers/students');
-const { check, validationResult } = require('express-validator')
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Pagination' });
 });
 
 /* GET users listing. */
 router
   .get('/users', ctrlUsers.getAll)
-  .post('/users', ctrlUsers.createOne)
+  .post('/users', ctrlUsers.validate('validation'), ctrlUsers.createOne)
   .get('/users/:userid', ctrlUsers.getOne)
-  .put('/users/:userid', ctrlUsers.updateOne)
+  .put('/users/:userid', ctrlUsers.validate('validation'), ctrlUsers.updateOne)
   .delete('/users/:userid', ctrlUsers.deleteOne)
 
   // Students router

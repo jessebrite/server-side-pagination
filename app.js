@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressValidator = require('express-validator');
-var methodOverride = require('method-override')
+const methodOverride = require('method-override')
 require('./app_api/models/db')
 
 var indexRouter = require('./app_server/routes/index');

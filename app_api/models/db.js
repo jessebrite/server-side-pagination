@@ -15,9 +15,6 @@ mongoose.connection.on('error', err => {
 mongoose.connection.on('disconnected', () => {
 	console.log('Mongoose disconnected');
 });
-mongoose.connection.on('disconnected', () => {
-	console.log('Mongoose disconnected');
-});
 
 // CAPTURE APP TERMINATION/RESTART EVENT
 const gracefulShutdown = (msg, callback) => {

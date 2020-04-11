@@ -1,5 +1,7 @@
 extends layout
 
+include _includes/sharedFunctions
+
 block content
   .row.banner
 
@@ -16,7 +18,7 @@ block content
             h4
               a(href=`/users/${user._id}`)= user.first_name
 
-            form.hidden(method='POST', action=`/users/${user._id}?_method=DELETE`)
+            form.hidden(method='POST' onclick="return confirm('Are you sure?');" action=`/users/${user._id}?_method=DELETE`)
               button.btn.btn-outline-danger.float-right.delete Delete
 
             p.email= user.email
