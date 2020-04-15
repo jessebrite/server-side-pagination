@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,6 +7,7 @@ var logger = require('morgan');
 const expressValidator = require('express-validator');
 const methodOverride = require('method-override')
 require('./app_api/models/db')
+require('./app_api/config/passport');
 
 var indexRouter = require('./app_server/routes/index');
 const usersRouter = require('./app_api/routes/index');

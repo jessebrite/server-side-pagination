@@ -1,6 +1,6 @@
 extends layout
 
-include includes/sharedFunctions
+include _includes/sharedFunctions
 
 block content
   .row.banner
@@ -10,7 +10,10 @@ block content
   .row
     .col-12.col-md-8
       form#addReview.form-horizontal(action='' method='POST' role='form')
-        +throwError()
+        - if (error === 'val')
+            .alert.alert-danger(role='alert') All fields required. Please try again
+              button.close(type='button' data-dismiss='alert' aria-label='Close')
+                span(aria-hidden='true') &times;
         .form-group.row
           label.col-xs-10.col-sm-2.control-label(for="first_name") First Name
           .col-xs-12.col-sm-10
@@ -25,8 +28,10 @@ block content
             input#email.form-control(name="email" placeholder="user@example.com")
         .form-group.row
           label.col-xs-10.col-sm-2.control-label(for="gender") Gender
-          .col-xs-12.col-sm-10
-            input#gender.form-control(name="gender" placeholder="Male or Female")
+          .col-md-3.mb-3
+            select.form-control.input-sm(name="gender")
+              option Male
+              option Female
         .form-group.row
           label.col.xs-10.col-sm-2.control-label(for="ip_address") IP Address
           .col-xs-12.col-sm-10

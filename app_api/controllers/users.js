@@ -150,11 +150,11 @@ const validate = method => {
   switch (method) {
     case 'validation': {
       return [
-        body('first_name', 'First name: min 3 chars').isLength({min: 3}).trim(),
-        body('last_name', 'Last name: min 3 chars').isLength({min: 3}).trim(),
-        body('email', 'Invalid email').isEmail().trim(),
+        body('first_name', 'First name: min 3 chars').isLength({min: 3}).trim().escape(),
+        body('last_name', 'Last name: min 3 chars').isLength({min: 3}).trim().escape(),
+        body('email', 'Invalid email').isEmail().normalizeEmail().trim(),
         body('gender', 'Gender is required').isAlpha().trim(),
-        body('ip_address', 'IP Address is required').trim(),
+        body('ip_address', 'IP Address is required').isIP().trim(),
        ]
     }
   }

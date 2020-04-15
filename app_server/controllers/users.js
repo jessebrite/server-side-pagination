@@ -9,7 +9,7 @@ const renderHomepage = (req, res, responseBody, total, pageNo) => {
     responseBody = [];
   } else {
     if (!responseBody.length) {
-      message = 'No users found nearby';
+      message = 'No users found';
     }
   }
 
@@ -40,7 +40,7 @@ const homelist = (req, res) => {
         return res.status(400).json({error: err});
       } else if (statusCode === 200 ) {
         renderHomepage(req, res, body.status, body.total, body.pageNo);
-      } else if (statusCode !== 200 ) {
+      } else {
         console.log('error ', statusCode);
         return res.status(400).send(body);
       }

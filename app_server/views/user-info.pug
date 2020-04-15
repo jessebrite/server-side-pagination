@@ -12,7 +12,7 @@ block content
 
   .row
     .col-12.col-md-8
-      form#addReview.form-horizontal(action='' method='POST' role='form')
+      form.form-horizontal(action='' method='POST' role='form')
         - if (error === 'val')
             .alert.alert-danger(role='alert') All fields required. Please try again
               button.close(type='button' data-dismiss='alert' aria-label='Close')
@@ -35,7 +35,6 @@ block content
             select.form-control.input-sm(name="gender")
               option Male
               option Female
-
         .form-group.row
           label.col.xs-10.col-sm-2.control-label(for="ip_address") IP Address
           .col-xs-12.col-sm-10

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const ctrlUsers = require('../controllers/users');
 const ctrlStudents = require('../controllers/students');
+const ctrlAuth = require('../controllers/authentication');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -23,5 +24,7 @@ router
     .get('/students/:studentid', ctrlStudents.retrieveOneStudent)
     .put('/students/:studentid', ctrlStudents.updateStudent)
     .delete('/students/:studentid', ctrlStudents.removeStudent)
+    .post('/register', ctrlAuth.register)
+    .post('/login', ctrlAuth.login)
 
 module.exports = router;
