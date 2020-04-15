@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressValidator = require('express-validator');
 const methodOverride = require('method-override')
+const passwort = require('passport');
 require('./app_api/models/db')
 require('./app_api/config/passport');
 
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method')) // To override PUT and DELETE methods
+app.use(passwort.initialize());
 
 app.use('/', indexRouter);
 app.use('/api', usersRouter);
