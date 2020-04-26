@@ -8,7 +8,7 @@ const register = async (req, res) => {
     return res.status(404).json({ message: 'All fields are required. Please try again' });
   }
 
-  let existingUser = await Member.findOne({email});
+  let existingUser = await Member.findOne({ email });
   if (existingUser) {
     return res.status(400).json({ message: 'Email already exists. Choose a new email' });
   }
@@ -19,10 +19,10 @@ const register = async (req, res) => {
   member.setPassword(password);
   member.save( err => {
     if (err) {
-      res.status(400).json({ message: 'Error encountered '})
+      return res.status(400).json({ message: 'Error encountered' })
     } else {
       const token = member.generateJwt();
-      res.status(201).json({token});
+      return res.status(201).json({ token });
     }
   });
 }
@@ -36,13 +36,11 @@ const login = (req, res) => {
     let token;
     if (err) { return res.status(400).json(err) }
     else if (!user) {
-      console.log('yawa dey')
       return res.status(400).json(info);
     }
     else {
       token = user.generateJwt();
-      console.log('e source');
-      return res.status(200).json({token});
+      return res.status(200).json({ token });
     }
   }) (req, res);
 }

@@ -1,5 +1,5 @@
 const request = require('request');
-const apiOptions = { server: 'http://localhost:3000' };
+const apiOptions = { server: `http://localhost:${process.env.PORT}` };
 
 /* Get 'home page' */
 const renderHomepage = (req, res, responseBody, total, pageNo) => {
@@ -14,7 +14,7 @@ const renderHomepage = (req, res, responseBody, total, pageNo) => {
   }
 
 	res.render('users-list', {
-	  title: 'Home Page',
+    title: 'Home Page',
     users: responseBody,
     pageTotal: total,
     current: pageNo,
@@ -26,7 +26,6 @@ const homelist = (req, res) => {
   const data = req.query.pageNo;
   const pageNo = (typeof data === 'undefined' || data < 1) ? 1 : parseInt(data);
   const path = `/api/users?pageNo=${pageNo}`;
-
 	const requestOptions = {
 		url: `${apiOptions.server}${path}`,
 		method: 'GET',
@@ -51,7 +50,7 @@ const homelist = (req, res) => {
 const getDetailsInfo = (req, res, callback) => {
   const userid = req.params.userid;
   const path = `/api/users/${userid}`
-  requestOptions = {
+  const requestOptions = {
     url: `${apiOptions.server}${path}`,
     method: 'GET',
     json: {}
@@ -92,7 +91,7 @@ const userInfo = (req, res) => {
 
 const createUserPage = (req, res, callback) => {
   const path = `/api/users`
-  requestOptions = {
+  const  requestOptions = {
     url: `${apiOptions.server}${path}`,
     method: 'GET',
     json: {}
@@ -201,7 +200,7 @@ const forkUser = (req, res) => {
   const queryText = { first_name, last_name, email, gender, ip_address };
   const path = '/api/users';
 
-  requestOptions = {
+  const requestOptions = {
     url: `${apiOptions.server}${path}`,
     method: 'POST',
     json: queryText

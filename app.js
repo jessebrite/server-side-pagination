@@ -1,19 +1,20 @@
 require('dotenv').config();
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const expressValidator = require('express-validator');
-const methodOverride = require('method-override')
-const passwort = require('passport');
-require('./app_api/models/db')
+const methodOverride = require('method-override');
+const passport = require('passport');
+require('./app_api/models/db');
 require('./app_api/config/passport');
 
-var indexRouter = require('./app_server/routes/index');
+// routes
+const indexRouter = require('./app_server/routes/index');
 const usersRouter = require('./app_api/routes/index');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
@@ -26,7 +27,7 @@ app.use(cookieParser());
 app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method')) // To override PUT and DELETE methods
-app.use(passwort.initialize());
+app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/api', usersRouter);

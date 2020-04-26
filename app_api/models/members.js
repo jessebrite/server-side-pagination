@@ -31,7 +31,7 @@ MemberSchema.methods.generateJwt = function () {
     email: this.email,
     name: this.name,
     exp: parseInt(expiry.getTime() / 1000, 10)
-    }, process.env.JWT_SECRET);
+  }, process.env.JWT_SECRET);
 }
 
 mongoose.model('Member', MemberSchema);

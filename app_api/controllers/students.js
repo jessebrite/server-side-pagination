@@ -110,7 +110,7 @@ const removeStudent = async (req, res) => {
   const id = req.params.studentid;
 
   try {
-    student = await Students.findByIdAndDelete(id);
+    const student = await Students.findByIdAndDelete(id);
     if (student !== null) {
       return res.status(200).json({
         status: 'Student deleted',

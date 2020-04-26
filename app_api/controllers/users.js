@@ -26,7 +26,7 @@ const getAll = async (req, res) => {
   } catch (error) {
     console.error('Error ', error);
     return res.status(400).send(error)
-  };
+  }
 };
 
 const getOne = async (req, res) => {
