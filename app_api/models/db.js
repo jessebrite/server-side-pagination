@@ -45,5 +45,14 @@ process.on('SIGTERM', () => {
 	});
 });
 
+process.on('unhandledRejection', (reason, promise) => {
+  throw reason;
+});
+
+process.on('uncaughtException', (error) => {
+  console.log(`Uncaught Exception: ${500} - ${error.message}, Stack: ${error.stack}`);
+  // process.exit(1);
+});
+
 require('./users');
 require('./members');

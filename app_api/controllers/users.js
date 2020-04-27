@@ -155,7 +155,7 @@ const validate = method => {
         body('email', 'Invalid email').isEmail().normalizeEmail().trim(),
         body('gender', 'Gender is required').isAlpha().trim(),
         body('ip_address', 'IP Address is required').isIP().trim(),
-       ]
+      ]
     }
   }
 }
