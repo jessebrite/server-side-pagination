@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Users = mongoose.model('Users');
+const colors = require('colors');
 const { body, validationResult } = require('express-validator/check'); // Using version 5.3.1
 
 const getAll = async (req, res) => {
@@ -68,7 +69,7 @@ const updateOne = async (req, res) => {
       });
     }
     if (user !== null) {
-      console.log('Update success!');
+      console.log(colors.green('Update success!'));
       return res.status(200).json({
         error: false,
         status: 'Update success',
@@ -76,7 +77,7 @@ const updateOne = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log('Error: update failed');
+    console.log(colors.red('Error: update failed'));
     return res.status(400).json(error);
   }
 }
@@ -95,7 +96,7 @@ const createOne = async (req, res) => {
     const user = await Users.create(queryText);
 
     if (!first_name || !last_name || !email || !gender || !ip_address) {
-      console.log('All fieds dey need')
+      console.log(colors.red('All fieds dey need'));
       return res.status(400).json({
         error: true,
         status: 'All fields are required'

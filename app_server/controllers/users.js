@@ -1,5 +1,6 @@
 const request = require('request');
 const apiOptions = { server: `http://localhost:${process.env.PORT}` };
+const colors = require('colors');
 
 /* Get 'home page' */
 const renderHomepage = (req, res, responseBody, total, pageNo) => {
@@ -63,7 +64,7 @@ const getDetailsInfo = (req, res, callback) => {
     }
     else if (statusCode === 200) {
       callback(req, res, body);
-      console.log(`User found: ${statusCode}`);
+      console.log(colors.green(`User found: ${statusCode}`));
     }
     else {
       showError(req, res, statusCode);

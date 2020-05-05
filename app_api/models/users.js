@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // USER TIME SCHEMA
 const UsersSchema = new mongoose.Schema({
@@ -22,7 +22,8 @@ const UsersSchema = new mongoose.Schema({
   },
   ip_address: {
     type: String,
-    required: true },
+    required: true
+  }
 });
 
-mongoose.model('Users', UsersSchema);
+mongoose.model("Users", UsersSchema);
