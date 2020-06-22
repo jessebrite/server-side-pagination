@@ -18,13 +18,13 @@ router
   .delete('/users/:userid', ctrlUsers.deleteOne)
 
   // Students router
-  router
-    .get('/students', ctrlStudents.getStudents)
-    .post('/students', ctrlStudents.validate('createStudent'), ctrlStudents.createStudent)
-    .get('/students/:studentid', ctrlStudents.retrieveOneStudent)
-    .put('/students/:studentid', ctrlStudents.updateStudent)
-    .delete('/students/:studentid', ctrlStudents.removeStudent)
-    .post('/register', ctrlAuth.register)
-    .post('/login', ctrlAuth.login)
+router
+  .get('/students', ctrlStudents.getStudents)
+  .post('/students', ctrlStudents.validate('createStudent'), ctrlStudents.createStudent)
+  .get('/students/:studentid', ctrlStudents.retrieveOneStudent)
+  .put('/students/:studentid', ctrlStudents.updateStudent)
+  .delete('/students/:studentid', ctrlStudents.removeStudent)
+  .post('/register', ctrlAuth.register)
+  .post('/login', ctrlAuth.login)
 
 module.exports = router;

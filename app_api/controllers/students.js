@@ -22,7 +22,6 @@ const getStudents = async (req, res) => {
 const createStudent = async (req, res) => {
 
   const { first_name, last_name, email, gender, ip_address } = req.body;
-
   const queryText = { first_name, last_name, email, gender, ip_address }
 
   try {
